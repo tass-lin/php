@@ -73,6 +73,7 @@ RUN apk --update add ca-certificates \
     && cp /usr/bin/php7 /usr/bin/php \
     && pecl channel-update pecl.php.net \
     && printf "yes\n" | pecl install swoole \
+    && echo -e 'extension=sockets.so\nextension=swoole.so\n' >> /etc/php7/php.ini \
     && pecl clear-cache \
     && wget https://getcomposer.org/composer.phar \
     && chmod +x composer.phar \
