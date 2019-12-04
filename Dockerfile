@@ -67,12 +67,12 @@ RUN apk --update add ca-certificates \
     php-zip@php \
     php-gmp@php \
     php-ftp@php \
+    php-mongodb@php \
     && rm -f $(find /etc/php7/conf.d -type f | grep sockets) \
     && cp /usr/bin/phpize7 /usr/bin/phpize \
     && cp /usr/bin/php7 /usr/bin/php \
     && pecl channel-update pecl.php.net \
     && printf "yes\n" | pecl install swoole \
-    && pecl install mongodb \
     && pecl clear-cache \
     && wget https://getcomposer.org/composer.phar \
     && chmod +x composer.phar \
@@ -81,8 +81,6 @@ RUN apk --update add ca-certificates \
     && echo "Asia/Taipei" >  /etc/timezone \
     && rm -rf /var/cache/apk/*
 
-COPY ./docker/www.conf /etc/php7/php-fpm.d/www.conf
 COPY ./docker/supervisord.conf /etc/supervisor.d/supervisord.ini
-COPY ./docker/php.ini /etc/php7/php.ini 
     
 CMD /usr/bin/supervisord -n -c /etc/supervisord.conf;
